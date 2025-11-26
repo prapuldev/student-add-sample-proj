@@ -1,25 +1,33 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const path = require("path");
-require("../models/mysql");
+import express from "express";
+import bodyParser from "body-parser";
+import path from "path";
+import cors from "cors";
+import helmet from "helmet";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+
+import "./models/mysql.js";
+import StudentRouter from "./models/students.js";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const app = express();
-
 const PORT = process.env.PORT || 5000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(require("cors")());
-app.use(require("helmet")());
-app.use("/api/students", require("../routes/students"));
+app.use(cors());
+app.use(helmet());
+
+app.use("/api/students", StudentRouter);
 
 // Production
 if (process.env.NODE_ENV === "production") {
-  // Set static folder
   app.use(express.static("client/build"));
 
   app.get("*", (req, res) => {
-    res.sendfile(path.resolve(__dirname, "client", "build", "index.html"));
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
   });
 }
 
