@@ -4,7 +4,17 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo "Building on my custom agent..."
+                echo 'Building...'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing...'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying...'
             }
         }
     }
