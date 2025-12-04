@@ -7,7 +7,9 @@ on:
 jobs:
   test_job:
     runs-on: ubuntu-latest
-
     steps:
       - name: Print hello
         run: echo "Hello from GitHub Actions!"
+    
+      - name: Print second test
+        run: echo "This is the second test running!"
